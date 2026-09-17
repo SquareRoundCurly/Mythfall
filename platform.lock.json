@@ -15,5 +15,5 @@
     "path": "module-host-c586205f80f00026c650e0972a862896f224da0834f9bf2eef5647be71fff210.zip",
     "sha256": "c586205f80f00026c650e0972a862896f224da0834f9bf2eef5647be71fff210"
   },
-  "realmengine_image": "europe-west1-docker.pkg.dev/pocketrealms/pocketrealms/realm-engine@sha256:aae6c2cb928db66de704631f22e607f7c83c07c8c90a7e3fad9f2bef576c44fd"
+  "realmengine_image": "europe-west1-docker.pkg.dev/pocketrealms/pocketrealms/realm-engine@sha256:4fc93b48db98a061c3cf1d2faac0ad5a846f3e337393226f1112828646f5a62e"
 }

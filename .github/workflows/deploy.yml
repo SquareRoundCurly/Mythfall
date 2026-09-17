@@ -61,7 +61,7 @@ jobs:
           npx playwright install --with-deps chromium
           host_image="$(python -c 'import json; print(json.load(open("platform.lock.json"))["realmengine_image"])')"
           mkdir -p artifacts/panels
-          docker run --detach --name mythfall-evaluation --entrypoint python -p 127.0.0.1:8831:8831 \
+          docker run --detach --name mythfall-evaluation --entrypoint python --user "$(id -u):$(id -g)" -p 127.0.0.1:8831:8831 \
             -e REALM_MODULE_SOURCE=session -e MYTHFALL_UI_DIRECTORY=/game/build/client \
             -e MYTHFALL_EVALUATION_WORKSPACE=/evidence/workspace \
             -v "$PWD:/game:ro" -v "$PWD/artifacts/panels:/evidence" \
