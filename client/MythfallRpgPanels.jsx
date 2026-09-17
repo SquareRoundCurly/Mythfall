@@ -5,6 +5,14 @@ import { Portrait } from './Portrait'
 
 const readable = (value) => String(value ?? '').replaceAll('_', ' ')
 
+function durationLabel(ticks) {
+  if (!Number.isInteger(ticks) || ticks <= 0) return ''
+  const seconds = ticks * 6
+  const [value, unit] = seconds % 3600 === 0 ? [seconds / 3600, 'hour']
+    : seconds % 60 === 0 ? [seconds / 60, 'minute'] : [seconds, 'second']
+  return `${value} ${unit}${value === 1 ? '' : 's'}`
+}
+
 export function CharacterSelector() {
   const { world, characterId, setCharacterId } = useMythfallSession()
   if (!world?.characters) return null
@@ -94,6 +102,7 @@ export function MythfallAbilitiesPanel({ pinSlot = null }) {
       {!abilities.length ? <InlineState>Choose a class to gain features. Passive features are shown on the character sheet.</InlineState> : <div className="mythfall-form">
         <Select label="Ability" value={ability.id} onChange={(id) => { setAbilityId(id); setTargets([]) }} options={abilities.map((entry) => ({ value: entry.id, label: entry.name }))} />
         <p>{ability.description}</p>
+        {durationLabel(ability.duration) && <p className="mythfall-note mythfall-ability-duration">Duration {durationLabel(ability.duration)}</p>}
         <p className="mythfall-note">{readable(ability.economy)} · Range {ability.range * 5} ft{ability.level ? ` · Level ${ability.level} spell` : ''}{ability.concentration ? ' · Concentration' : ''}</p>
         {ability.level > 0 && <Select label="Spell slot" value={String(Math.max(ability.level, Number(slot)))} onChange={setSlot}
           options={[1, 2].filter((level) => level >= ability.level && actor.rpg.resources[`slot_${level}`]).map((level) => ({ value: String(level), label: `Level ${level} (${actor.rpg.resources[`slot_${level}`].current} left)` }))} />}

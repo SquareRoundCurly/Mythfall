@@ -38,6 +38,26 @@ class RpgRulesTests(unittest.TestCase):
             with self.subTest(key=key):
                 self.assertEqual(validate_definition(spec), spec)
 
+    def test_light_survives_an_hour_and_save_reload_then_expires_at_two_hours(self):
+        from mythfall.simulation.perception import can_see
+        self.build("cleric")
+        self.sim.command({"kind": "unequip", "slot": "weapon"}, "free-hand")
+        dark = [26, 24]
+        self.sim.world["map"]["dark_tiles"] = [dark]
+        for item in list(self.sim.world["items"].values()) + list(self.sim.world["fixtures"].values()):
+            item["lit"] = False
+            item.pop("light", None)
+        self.assertFalse(can_see(self.sim.world, PLAYER, dark))
+        started = self.sim.world["tick"]
+        self.sim.command({"kind": "ability", "ability": "ability.light@1", "target": "item.sword"}, "light")
+        ends = self.sim.world["items"]["item.sword"]["light"]["ends_at"]
+        self.assertEqual(ends, started + 1200)
+        finish(self.sim, {"kind": "wait", "ticks": 600}, "first-hour")
+        self.sim = Simulation(json.loads(json.dumps(self.sim.world)))
+        self.assertTrue(can_see(self.sim.world, PLAYER, dark))
+        finish(self.sim, {"kind": "wait", "ticks": ends - self.sim.world["tick"]}, "second-hour")
+        self.assertFalse(can_see(self.sim.world, PLAYER, dark))
+
     def test_level_features_resources_and_srd_subclass_survive_reload(self):
         self.build("fighter", style="dueling")
         player = self.sim.world["actors"][PLAYER]

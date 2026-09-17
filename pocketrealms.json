@@ -1,7 +1,7 @@
 {
   "format": 1,
   "module": "mythfall",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "title": "Mythfall",
   "summary": "A persistent tabletop RPG: people, possessions and consequences in Emberwick.",
   "workspace": true,
@@ -11,7 +11,7 @@
   },
   "server": {
     "contract": 1,
-    "wheel": "server/mythfall-0.4.0-py3-none-any.whl",
+    "wheel": "server/mythfall-0.4.1-py3-none-any.whl",
     "import": "mythfall",
     "realm": "Mythfall"
   },

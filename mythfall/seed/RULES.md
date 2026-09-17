@@ -4,6 +4,10 @@ Rules source: classic **SRD 5.1**, not the revised 2024 rules. Content IDs carry
 explicit revisions (`@1`). A later definition never silently changes an existing
 item or learned ability. Custom content uses the installed effect operations.
 
+Mythfall 0.4.1 extends Light to two hours (1,200 six-second turns), retaining
+one illuminated object per caster. This is a deliberate Mythfall balance change
+from the SRD duration. The release resets prior worlds during pre-alpha.
+
 ## Characters
 
 Fighter, Rogue, Cleric and Wizard support character levels 1–3, the Champion,

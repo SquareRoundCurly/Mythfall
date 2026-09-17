@@ -72,6 +72,7 @@ jobs:
             sleep 1
           done
           MYTHFALL_EVIDENCE="$PWD/artifacts/panels" node evaluation/panels.mjs
+          MYTHFALL_EVIDENCE="$PWD/artifacts/panels" node evaluation/release.mjs
       - name: Deploy validated game
         env:
           POCKETREALMS_API_KEY: ${{ secrets.POCKETREALMS_API_KEY }}
