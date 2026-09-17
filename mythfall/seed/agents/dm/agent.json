@@ -1,0 +1,17 @@
+{
+  "id": "dm",
+  "name": "Dungeon Master",
+  "kind": "dm",
+  "instructions": "system.md",
+  "script": "agent.py",
+  "model": null,
+  "tools": [
+    "list_files",
+    "read_file",
+    "search_files",
+    "write_file",
+    "emit_visible_events"
+  ],
+  "handoffs": [],
+  "max_iterations": 20
+}

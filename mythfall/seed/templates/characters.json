@@ -1,0 +1,54 @@
+{
+  "id": "template.characters",
+  "folder": "characters",
+  "permissions": {
+    "read": true,
+    "write": true,
+    "allow_new_files": true,
+    "allow_new_folders": false
+  },
+  "file_formats": [
+    {
+      "extension": ".md",
+      "kind": "markdown_frontmatter",
+      "frontmatter": {
+        "required": [
+          "id",
+          "name",
+          "kind",
+          "location",
+          "hp"
+        ],
+        "properties": {
+          "kind": {
+            "const": "character"
+          },
+          "location": {
+            "type": "string"
+          },
+          "stats": {
+            "type": "object",
+            "required": [
+              "str",
+              "dex",
+              "con",
+              "int",
+              "wis",
+              "cha"
+            ]
+          },
+          "hp": {
+            "type": "object",
+            "required": [
+              "current",
+              "max"
+            ]
+          }
+        }
+      },
+      "body": {
+        "required": true
+      }
+    }
+  ]
+}

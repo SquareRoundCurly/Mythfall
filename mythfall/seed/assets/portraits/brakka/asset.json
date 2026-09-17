@@ -1,0 +1,19 @@
+{
+  "job_id": "55c71bd6ad2e478c839c15e8b31104fa",
+  "request_id": "01a07cf1-7fe7-7b01-9ec8-77e53892903f",
+  "name": "mythfall-portrait-brakka",
+  "instruction": "A polished hand-painted portrait for a grounded medieval fantasy roleplaying game, bust portrait with face clearly readable at small sizes, softly textured gouache and oil paint, subtle expressive eyes, warm candlelight and cool misty shadows, muted moss green, brown and aged gold. Square composition, centered head and shoulders, plain dark desaturated green backdrop, no frame, no writing, no UI, no extra people. Brakka, a tough adult female road-bandit leader with strong stocky build, ruddy weathered face, short unruly auburn hair, patched rust-red leather armor, an intimidating expression with a trace of unease.",
+  "kind": "image",
+  "model": "fal-ai/flux-2",
+  "width": 1024,
+  "height": 1024,
+  "sprite_size": [
+    1.0,
+    1
+  ],
+  "sha256": {
+    "image.png": "23d467543546ffba070c742ca5e9e2bf69632553007c2f0e6baf8bc40d005809",
+    "sprite.bin": "b2ee6666610f5436e88899d2a204e7fa386792dccd05c1bf3c416cf65362ccc5",
+    "sprite.gltf": "45db9a04fbafbb6f5ecac77be94b4ba6b62db13f9dc450c9dd2d1bd9172b2810"
+  }
+}

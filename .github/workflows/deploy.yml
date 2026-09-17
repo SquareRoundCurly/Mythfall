@@ -1,0 +1,90 @@
+name: Test and publish Mythfall
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: mythfall-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci --ignore-scripts
+      - name: Install checksum-pinned platform tools
+        run: python tools/install-platform.py
+      - name: Build the coordinated Python and panel release
+        run: |
+          python -m pip install setuptools==80.9.0 wheel==0.45.1
+          SOURCE_DATE_EPOCH=315532800 python -m pip wheel --no-deps --no-build-isolation --wheel-dir server .
+          python tests/verify_wheel.py server
+          node .platform/ui/node_modules/@pocketrealms/module-ui/build-module-ui.mjs --entry client/entry.jsx --out-dir build/client
+          npm test
+          pocketrealms validate .
+      - name: Obtain read-only access to the private test image
+        id: reader
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: projects/386149936091/locations/global/workloadIdentityPools/github-actions/providers/mythfall-tests
+          service_account: mythfall-host-reader@pocketrealms.iam.gserviceaccount.com
+          token_format: access_token
+          create_credentials_file: false
+      - uses: docker/login-action@v3
+        with:
+          registry: europe-west1-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.reader.outputs.access_token }}
+      - name: Test the packaged wheel in the pinned host
+        run: |
+          set -euo pipefail
+          host_image="$(python -c 'import json; print(json.load(open("platform.lock.json"))["realmengine_image"])')"
+          [[ "${host_image}" =~ ^europe-west1-docker.pkg.dev/pocketrealms/pocketrealms/realm-engine@sha256:[0-9a-f]{64}$ ]]
+          docker pull "${host_image}"
+          docker run --rm --entrypoint python -e REALM_MODULE_SOURCE=session -v "$PWD:/game:ro" "${host_image}" -m RealmEngine.modules.test_host /game
+      - name: Test actual desktop and mobile panels in compiled Atlas
+        run: |
+          set -euo pipefail
+          npx playwright install --with-deps chromium
+          host_image="$(python -c 'import json; print(json.load(open("platform.lock.json"))["realmengine_image"])')"
+          mkdir -p artifacts/panels
+          docker run --detach --name mythfall-evaluation --entrypoint python -p 127.0.0.1:8831:8831 \
+            -e REALM_MODULE_SOURCE=session -e MYTHFALL_UI_DIRECTORY=/game/build/client \
+            -e MYTHFALL_EVALUATION_WORKSPACE=/evidence/workspace \
+            -v "$PWD:/game:ro" -v "$PWD/artifacts/panels:/evidence" \
+            "${host_image}" -m RealmEngine.modules.test_host /game --serve evaluation.server:app
+          node .platform/host/serve.mjs .platform/host > artifacts/host.log 2>&1 &
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:4178/__module__/module-release >/dev/null; then break; fi
+            sleep 1
+          done
+          MYTHFALL_EVIDENCE="$PWD/artifacts/panels" node evaluation/panels.mjs
+      - name: Deploy validated game
+        env:
+          POCKETREALMS_API_KEY: ${{ secrets.POCKETREALMS_API_KEY }}
+        run: pocketrealms --json deploy . --visibility public
+      - name: Retain evaluation logs
+        if: always()
+        run: |
+          mkdir -p artifacts
+          docker logs mythfall-evaluation > artifacts/runtime.log 2>&1 || true
+          docker stop mythfall-evaluation || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mythfall-evidence-${{ github.sha }}
+          path: artifacts
+          retention-days: 7

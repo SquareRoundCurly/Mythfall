@@ -1,0 +1,19 @@
+{
+  "job_id": "5c0b2ecdb0914dcf8ac82ba371aae6ec",
+  "request_id": "01a07cf1-7cdd-78b1-84ed-a2d219faf048",
+  "name": "mythfall-portrait-tommen_ash",
+  "instruction": "A polished hand-painted portrait for a grounded medieval fantasy roleplaying game, bust portrait with face clearly readable at small sizes, softly textured gouache and oil paint, subtle expressive eyes, warm candlelight and cool misty shadows, muted moss green, brown and aged gold. Square composition, centered head and shoulders, plain dark desaturated green backdrop, no frame, no writing, no UI, no extra people. Tommen Ash, a sturdy middle-aged innkeeper with weathered features, a short dark beard, rolled linen sleeves and a brown apron; warm hospitality over tired worried eyes.",
+  "kind": "image",
+  "model": "fal-ai/flux-2",
+  "width": 1024,
+  "height": 1024,
+  "sprite_size": [
+    1.0,
+    1
+  ],
+  "sha256": {
+    "image.png": "79b47b5e8dbea06cca277a69edee2e357345875fa2d82de0989eacad4e97cb16",
+    "sprite.bin": "b2ee6666610f5436e88899d2a204e7fa386792dccd05c1bf3c416cf65362ccc5",
+    "sprite.gltf": "45db9a04fbafbb6f5ecac77be94b4ba6b62db13f9dc450c9dd2d1bd9172b2810"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "format": 1,
+  "module": "mythfall",
+  "version": "0.4.0",
+  "title": "Mythfall",
+  "summary": "A persistent tabletop RPG: people, possessions and consequences in Emberwick.",
+  "workspace": true,
+  "runtime": {
+    "kind": "realmengine",
+    "contract": 1
+  },
+  "server": {
+    "contract": 1,
+    "wheel": "server/mythfall-0.4.0-py3-none-any.whl",
+    "import": "mythfall",
+    "realm": "Mythfall"
+  },
+  "client": {
+    "contract": 1,
+    "panels": "build/client/panels.js",
+    "styles": [
+      "build/client/panels.css"
+    ]
+  },
+  "include": [
+    "server/*.whl",
+    "build/client/*.js",
+    "build/client/*.css"
+  ]
+}

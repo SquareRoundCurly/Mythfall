@@ -1,0 +1,33 @@
+{
+  "id": "template.turns",
+  "folder": "turns",
+  "permissions": {
+    "read": true,
+    "write": true,
+    "allow_new_files": true,
+    "allow_new_folders": true
+  },
+  "file_formats": [
+    {
+      "extension": ".md",
+      "kind": "markdown_frontmatter",
+      "frontmatter": {
+        "required": [
+          "player_intent"
+        ],
+        "properties": {
+          "player_intent": {
+            "type": "string"
+          }
+        }
+      },
+      "body": {
+        "required": true
+      }
+    },
+    {
+      "extension": ".py",
+      "kind": "markdown"
+    }
+  ]
+}

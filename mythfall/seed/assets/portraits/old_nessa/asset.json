@@ -1,0 +1,19 @@
+{
+  "job_id": "6d6019ce009349d49e1ac2f6622eae55",
+  "request_id": "01a07cf1-7bca-75b0-b2f9-8a83cc73c7f7",
+  "name": "mythfall-portrait-old_nessa",
+  "instruction": "A polished hand-painted portrait for a grounded medieval fantasy roleplaying game, bust portrait with face clearly readable at small sizes, softly textured gouache and oil paint, subtle expressive eyes, warm candlelight and cool misty shadows, muted moss green, brown and aged gold. Square composition, centered head and shoulders, plain dark desaturated green backdrop, no frame, no writing, no UI, no extra people. Old Nessa, an elderly herbalist with a deeply lined face, knowing gentle smile, silver hair tied back, a faded plum shawl, and dried reeds tucked into her clothes.",
+  "kind": "image",
+  "model": "fal-ai/flux-2",
+  "width": 1024,
+  "height": 1024,
+  "sprite_size": [
+    1.0,
+    1
+  ],
+  "sha256": {
+    "image.png": "f70442b44419aa866a0c8279cb05ef18d1cc8b518e3d93f996f9de1335b79250",
+    "sprite.bin": "b2ee6666610f5436e88899d2a204e7fa386792dccd05c1bf3c416cf65362ccc5",
+    "sprite.gltf": "45db9a04fbafbb6f5ecac77be94b4ba6b62db13f9dc450c9dd2d1bd9172b2810"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "authored_at": "2026-09-07",
+  "tool": "built-in image_gen",
+  "prompts": "prompts.json",
+  "use": "prebuilt local game textures; runtime model calls remain in Model Gateway",
+  "assets": [
+    {
+      "path": "terrain.png",
+      "source_artifact": "exec-2e874d31-145b-405c-9581-c8f488d74aea.png",
+      "sha256": "b958425cfddb9c8522b30dd234ad6cef1625603ff3fb97260473c200b3283eb5",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alpha_extrema": [
+        219,
+        250
+      ]
+    },
+    {
+      "path": "props.png",
+      "source_artifact": "exec-c83599b8-ad11-48ff-815f-f83b74f835bf.png",
+      "sha256": "1328f7fb46db5c98cdc15cb13804c518ab9b6518cdbe57bbfe88205155a1b780",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "characters.png",
+      "source_artifact": "exec-f1c70b1b-cf15-4cf1-be23-d94f2a75fe6b.png",
+      "sha256": "b08463e63941916f936a83251ddfc64048dc81da137bb4390ad093be0c067f16",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "alpha_extrema": [
+        0,
+        254
+      ]
+    }
+  ]
+}

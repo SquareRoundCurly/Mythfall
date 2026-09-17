@@ -1,0 +1,42 @@
+{
+  "id": "template.quests",
+  "folder": "quests",
+  "permissions": {
+    "read": true,
+    "write": true,
+    "allow_new_files": true,
+    "allow_new_folders": false
+  },
+  "file_formats": [
+    {
+      "extension": ".md",
+      "kind": "markdown_frontmatter",
+      "frontmatter": {
+        "required": [
+          "id",
+          "name",
+          "kind",
+          "status",
+          "objectives"
+        ],
+        "properties": {
+          "kind": {
+            "const": "quest"
+          },
+          "starts_at": {
+            "type": "string"
+          },
+          "location_refs": {
+            "type": "array"
+          },
+          "objectives": {
+            "type": "array"
+          }
+        }
+      },
+      "body": {
+        "required": true
+      }
+    }
+  ]
+}

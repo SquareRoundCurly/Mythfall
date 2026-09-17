@@ -1,0 +1,24 @@
+{
+  "id": "template.agents",
+  "folder": "agents",
+  "permissions": {
+    "read": true,
+    "write": false,
+    "allow_new_files": false,
+    "allow_new_folders": true
+  },
+  "file_formats": [
+    {
+      "extension": ".json",
+      "kind": "json"
+    },
+    {
+      "extension": ".md",
+      "kind": "markdown"
+    },
+    {
+      "extension": ".py",
+      "kind": "markdown"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "id": "template.locations",
+  "folder": "locations",
+  "permissions": {
+    "read": true,
+    "write": true,
+    "allow_new_files": true,
+    "allow_new_folders": true
+  },
+  "file_formats": [
+    {
+      "extension": ".md",
+      "kind": "markdown_frontmatter",
+      "frontmatter": {
+        "required": [
+          "id",
+          "name",
+          "kind",
+          "location_type",
+          "exits",
+          "description_short"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "const": "location"
+          },
+          "parent": {
+            "type": "string"
+          },
+          "exits": {
+            "type": "object"
+          }
+        }
+      },
+      "body": {
+        "required": true
+      }
+    }
+  ]
+}

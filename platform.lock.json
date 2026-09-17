@@ -1,0 +1,19 @@
+{
+  "format": 1,
+  "cli": {
+    "version": "0.2.0",
+    "path": "pocketrealms-0.2.0-py3-none-any.whl",
+    "sha256": "afc5e98c2849b18ca8001a2bd62128f5ac4f167197ca68c0e81c08d341c78f38"
+  },
+  "module_ui": {
+    "contract": 1,
+    "path": "module-ui-86303681f95a4a9b5b33e6523f30b9334bbe896c24939538274a115425e3eb56.tgz",
+    "sha256": "86303681f95a4a9b5b33e6523f30b9334bbe896c24939538274a115425e3eb56"
+  },
+  "module_host": {
+    "contract": 1,
+    "path": "module-host-c586205f80f00026c650e0972a862896f224da0834f9bf2eef5647be71fff210.zip",
+    "sha256": "c586205f80f00026c650e0972a862896f224da0834f9bf2eef5647be71fff210"
+  },
+  "realmengine_image": "europe-west1-docker.pkg.dev/pocketrealms/pocketrealms/realm-engine@sha256:aae6c2cb928db66de704631f22e607f7c83c07c8c90a7e3fad9f2bef576c44fd"
+}

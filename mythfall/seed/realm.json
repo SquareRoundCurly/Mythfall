@@ -1,0 +1,22 @@
+{
+  "id": "Mythfall",
+  "name": "Mythfall",
+  "description": "The first PocketRealms world definition.",
+  "version": 1,
+  "templates": [
+    "templates/agents.json",
+    "templates/characters.json",
+    "templates/locations.json",
+    "templates/quests.json",
+    "templates/turns.json",
+    "templates/templates.json"
+  ],
+  "filesystem": {
+    "allow_root_writes": false,
+    "allow_unknown_top_level_folders": false,
+    "readonly_paths": [
+      "realm.json",
+      "README.md"
+    ]
+  }
+}

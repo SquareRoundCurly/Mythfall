@@ -1,0 +1,16 @@
+{
+  "id": "template.templates",
+  "folder": "templates",
+  "permissions": {
+    "read": true,
+    "write": false,
+    "allow_new_files": false,
+    "allow_new_folders": false
+  },
+  "file_formats": [
+    {
+      "extension": ".json",
+      "kind": "json"
+    }
+  ]
+}

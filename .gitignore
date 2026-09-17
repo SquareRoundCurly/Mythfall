@@ -1,0 +1,14 @@
+node_modules/
+build/
+dist/
+server/
+artifacts/
+test-results/
+.module-host/
+.platform/
+__pycache__/
+*.pyc
+*.egg-info/
+.env
+*.env
+.pocketrealms/

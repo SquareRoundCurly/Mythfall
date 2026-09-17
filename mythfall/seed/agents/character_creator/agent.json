@@ -1,0 +1,20 @@
+{
+  "id": "character_creator",
+  "name": "Character Creator",
+  "kind": "character_creator",
+  "instructions": "system.md",
+  "script": "agent.py",
+  "model": null,
+  "tools": [
+    "list_files",
+    "read_file",
+    "search_files",
+    "write_file",
+    "emit_visible_events",
+    "emit_component_event",
+    "mark_character_creation_checklist",
+    "set_realm_state"
+  ],
+  "handoffs": [],
+  "max_iterations": 20
+}

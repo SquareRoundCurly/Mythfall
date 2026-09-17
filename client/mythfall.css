@@ -1,0 +1,92 @@
+.mythfall-panel { height:100%; min-width:0; min-height:0; box-sizing:border-box; color:var(--pr-text); background:var(--pr-bg-panel); font:12px/1.45 system-ui,sans-serif; container-type:inline-size; }
+.mythfall-panel * { box-sizing:border-box; }
+.mythfall-panel button { touch-action:manipulation; }
+.mythfall-scroll { overflow:auto; }
+.mythfall-padding { padding:10px; }
+.mythfall-form { display:grid; gap:8px; }
+.mythfall-buttons { display:flex; flex-wrap:wrap; gap:6px; }
+.mythfall-resources { display:grid; grid-template-columns:repeat(auto-fit,minmax(100px,1fr)); gap:8px; }
+.mythfall-resources > div { display:grid; gap:3px; padding:8px; border:1px solid var(--pr-border-subtle); border-radius:4px; }
+.mythfall-resources span { text-transform:capitalize; }
+.mythfall-resources small { color:var(--pr-text-muted); }
+.mythfall-targets { display:flex; flex-wrap:wrap; gap:6px; max-height:220px; overflow:auto; }
+.mythfall-targets [aria-pressed="true"] { outline:2px solid var(--pr-focus); outline-offset:-2px; }
+.mythfall-party-member { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid var(--pr-border-subtle); }
+.mythfall-party-member .mythfall-portrait { width:44px; height:56px; }
+.mythfall-party-member p { margin:4px 0 8px; }
+.mythfall-initiative { padding:0; list-style:none; }
+.mythfall-initiative li { display:flex; gap:10px; justify-content:space-between; padding:8px; border-bottom:1px solid var(--pr-border-subtle); }
+.mythfall-initiative li[aria-current="step"] { background:var(--pr-bg-surface); border-left:3px solid var(--pr-focus); }
+.mythfall-note { margin:0; color:var(--pr-text-muted); font-size:11px; }
+.mythfall-panel h3 { margin:0; color:var(--pr-text-heading); font:20px/1.25 Georgia,serif; }
+.mythfall-character { display:flex; align-items:center; gap:16px; padding:18px 14px; }
+.mythfall-character > div:last-child { display:grid; gap:7px; }
+.mythfall-character span { color:var(--pr-text-muted); font-size:11px; }
+.mythfall-portrait { position:relative; flex:none; width:76px; height:96px; overflow:hidden; border:1px solid #9b8359; border-radius:4px; background:radial-gradient(circle at 40% 25%,var(--portrait-color),#243628 80%); display:grid; place-items:center; }
+.mythfall-portrait img { width:100%; height:100%; object-fit:cover; }
+.mythfall-portrait > span { font:32px Georgia,serif; color:#eee3c2; }
+.mythfall-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:0; text-align:center; }
+.mythfall-stats div { padding:6px; border:1px solid var(--pr-border-subtle); border-radius:3px; }
+.mythfall-stats dt { color:var(--pr-text-muted); font-size:10px; }
+.mythfall-stats dd { margin:4px 0 0; font:18px var(--pr-mono); }
+.mythfall-needs { display:flex; gap:14px; color:var(--pr-text-muted); }
+.mythfall-needs label { flex:1; }
+.mythfall-needs meter { display:block; width:100%; height:10px; accent-color:var(--pr-focus); }
+.mythfall-inventory { display:grid; gap:5px; }
+.mythfall-inventory .editor-button { justify-content:start; text-align:left; }
+.mythfall-inventory small { margin-left:auto; color:var(--pr-text-muted); font-size:10px; white-space:nowrap; }
+.mythfall-item-icon { width:22px; flex:none; color:#c4aa74; font-size:19px; text-align:center; }
+.mythfall-intent { display:flex; align-items:end; gap:8px; }
+.mythfall-intent .editor-field { flex:1; }
+.mythfall-status { color:var(--pr-text-muted); font-size:11px; }
+.mythfall-reply { margin:12px; padding-bottom:12px; border-bottom:1px solid var(--pr-border); }
+.mythfall-journal { padding:3px 12px 12px; }
+.mythfall-journal p { display:flex; gap:10px; padding:9px 0; margin:0; border-bottom:1px solid var(--pr-border-subtle); }
+.mythfall-journal time { flex:none; color:var(--pr-text-dim); font:10px/1.7 var(--pr-mono); }
+.mythfall-world { display:flex; flex-direction:column; overflow:hidden; }
+.mythfall-map-toolbar { justify-content:flex-start; gap:3px; padding:7px 8px; flex-wrap:wrap; }
+.mythfall-location { display:flex; align-items:baseline; gap:8px; margin-right:auto; }
+.mythfall-location strong { color:var(--pr-text-heading); font:18px Georgia,serif; }
+.mythfall-location span { font-size:8px; letter-spacing:1.5px; color:var(--pr-text-dim); }
+.mythfall-clock { display:flex; align-items:baseline; gap:7px; margin-right:7px; font-variant-numeric:tabular-nums; }
+.mythfall-clock span { color:var(--pr-text-muted); font-size:10px; }
+.mythfall-map { flex:1; position:relative; min-width:0; min-height:0; overflow:hidden; background:#596d4e; cursor:grab; touch-action:none; user-select:none; -webkit-touch-callout:none; }
+.mythfall-map:active { cursor:grabbing; }
+.mythfall-map .atlas-canvas { width:100%; height:100%; }
+.mythfall-map canvas { display:block; width:100%; height:100%; }
+.mythfall-map-label { position:absolute; color:#f1e9cf; border:1px solid #a79b7355; border-radius:3px; background:#16211de8; box-shadow:0 1px 4px #0006; cursor:pointer; z-index:2; }
+.mythfall-map-label { transform:translate(-50%,20px); padding:2px 6px; font:10px/1.2 system-ui,sans-serif; white-space:nowrap; }
+.mythfall-map-label span { display:block; color:#bac7a5; font-size:8px; }
+.mythfall-map-label.player { color:#f6d683; border-color:#c8aa6a88; }
+.mythfall-item-target { position:absolute; width:28px; height:28px; transform:translate(-50%,-50%); padding:0; border:1px solid transparent; border-radius:50%; background:transparent; cursor:pointer; z-index:3; }
+.mythfall-item-target:hover,.mythfall-item-target:focus-visible { border-color:#d7be75; background:#f5dda619; }
+.mythfall-map button:focus-visible { outline:2px solid var(--pr-focus); outline-offset:2px; }
+.mythfall-map-hint { position:absolute; bottom:10px; left:12px; right:12px; text-align:center; font-size:9px; color:#f1ecd2; text-shadow:0 1px 4px #000; pointer-events:none; }
+.mythfall-welcome { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; background:var(--pr-bg-panel); padding:25px; }
+.mythfall-game-chat { display:flex; flex-direction:column; position:relative; }
+.mythfall-chat-history { flex:1; min-height:0; overflow:auto; overscroll-behavior:contain; padding:12px; overflow-wrap:anywhere; }
+.mythfall-chat-welcome { padding:10px 2px; color:var(--pr-text-muted); }
+.mythfall-chat-welcome h3 { color:var(--pr-text-heading); }
+.mythfall-chat-turn { margin-bottom:18px; }
+.mythfall-chat-turn p { margin:5px 0 0; white-space:pre-wrap; }
+.mythfall-chat-player { padding:10px; border:1px solid var(--pr-border); background:var(--pr-bg-surface); border-radius:4px; }
+.mythfall-chat-player header { display:flex; flex-wrap:wrap; align-items:baseline; gap:8px; justify-content:space-between; }
+.mythfall-chat-player strong { color:var(--pr-text-heading); }
+.mythfall-chat-player time { color:var(--pr-text-dim); font-size:10px; }
+.mythfall-chat-message { padding:9px 10px 2px; }
+.mythfall-chat-message strong { font-size:10px; color:var(--pr-text-muted); }
+.mythfall-chat-turn .mythfall-chat-outcome { padding:6px 10px; color:var(--pr-text-muted); font-size:11px; }
+.mythfall-chat-turn[data-status="rejected"] .mythfall-chat-outcome { color:var(--pr-danger, #df978a); }
+.mythfall-chat-pending { padding:10px; color:var(--pr-text-muted); }
+.mythfall-chat-pending p { white-space:pre-wrap; }
+.mythfall-chat-latest { align-self:center; margin:4px; }
+.mythfall-chat-composer { padding:10px; border-top:1px solid var(--pr-border); display:grid; gap:8px; }
+.mythfall-chat-composer .editor-field { grid-template-columns:1fr; gap:5px; }
+.mythfall-chat-composer textarea { min-height:65px; max-height:180px; }
+.mythfall-chat-send { display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-end; gap:6px; }
+.mythfall-chat-send > span { margin-right:auto; font-size:10px; color:var(--pr-text-dim); }
+@container (max-width:360px) {
+  .mythfall-panel .editor-field { grid-template-columns:1fr; gap:5px; }
+  .mythfall-panel .editor-field-hint,.mythfall-panel .editor-field-error { grid-column:1; }
+  .mythfall-location span { display:none; }
+}
