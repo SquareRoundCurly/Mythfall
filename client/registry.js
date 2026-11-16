@@ -1,10 +1,9 @@
 export function panels(builtinPanels) { return [
   ...builtinPanels.map((panel) => (
-    panel.id === 'builtin.atlas' ? { ...panel, title: 'World', size: 5 }
-      : panel.id === 'builtin.chat' ? { ...panel, size: 1 } : panel
+    panel.id === 'builtin.atlas' ? { ...panel, title: 'World', size: 5 } : panel
   )),
   ...[
-    ['chat', 'Game chat'], ['character', 'Character'], ['inventory', 'Inventory'],
+    ['creation', 'Character creation'], ['chat', 'Game chat'], ['character', 'Character'], ['inventory', 'Inventory'],
     ['conversation', 'Conversation'], ['actions', 'Actions & time'], ['journal', 'Journal'],
     ['abilities', 'Abilities'], ['party', 'Party & initiative'],
   ].map(([name, title]) => ({
@@ -21,7 +20,7 @@ export function defaultLayout({ compact = false } = {}) {
   if (compact) return {
     dockbox: { id: 'mythfall.dock', mode: 'horizontal', children: [pane('mythfall.mobile', 1,
       'builtin.atlas', 'mythfall.chat', 'mythfall.character', 'mythfall.inventory', 'mythfall.conversation',
-      'mythfall.abilities', 'mythfall.party', 'mythfall.actions', 'mythfall.journal', 'builtin.chat')] },
+      'mythfall.abilities', 'mythfall.party', 'mythfall.actions', 'mythfall.journal', 'mythfall.creation')] },
   }
   return {
     dockbox: { id: 'mythfall.dock', mode: 'horizontal', children: [
@@ -34,7 +33,7 @@ export function defaultLayout({ compact = false } = {}) {
         pane('mythfall.actions', 1, 'mythfall.actions'),
       ] },
       { id: 'mythfall.story-column', mode: 'vertical', size: 2.5, children: [
-        pane('mythfall.conversation', 3, 'mythfall.chat', 'mythfall.conversation', 'builtin.chat'),
+        pane('mythfall.conversation', 3, 'mythfall.chat', 'mythfall.conversation', 'mythfall.creation'),
         pane('mythfall.journal', 2, 'mythfall.party', 'mythfall.journal'),
       ] },
     ] },

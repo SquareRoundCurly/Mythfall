@@ -9,7 +9,7 @@ function timestamp(tick) {
 }
 
 export function MythfallChatPanel() {
-  const { packet, world, player, busy, submission, error, canAct, act, cancel, intentText, setIntentText, openPanel } = useMythfallSession()
+  const { packet, world, player, busy, submission, error, canAct, act, cancel, intentText, setIntentText, openPanel, creationUncertain } = useMythfallSession()
   const history = useRef(null)
   const follow = useRef(true)
   const [showLatest, setShowLatest] = useState(false)
@@ -46,7 +46,7 @@ export function MythfallChatPanel() {
       {!turns.length && (!world || available) && <div className="mythfall-chat-welcome"><h3>What do you do?</h3>
         <p>Describe an action, ask about the world, or say something to a nearby person.</p>
         <p>Actions from your pack, the map, and other game panels appear here too.</p>
-        {!world && <Button onClick={() => openPanel('builtin.chat')}>Create your character in Chat</Button>}
+        {!world && <Button onClick={() => openPanel('mythfall.creation')}>Create your character in Chat</Button>}
       </div>}
       {turns.map((turn) => <article className="mythfall-chat-turn" key={turn.id} data-status={turn.status}>
         <div className="mythfall-chat-player"><header><strong>{player?.name ?? 'You'}</strong><time>{timestamp(turn.tick)}</time></header><p>{turn.player}</p></div>
@@ -64,6 +64,8 @@ export function MythfallChatPanel() {
       follow.current = true; setShowLatest(false); history.current.scrollTop = history.current.scrollHeight
     }}>Latest</Button>}
     {error && <InlineState kind="error">{error}</InlineState>}
+    {creationUncertain && <div className="mythfall-padding"><InlineState>Character creation completion is uncertain. Check saved history before another action.</InlineState>
+      <Button onClick={() => openPanel('mythfall.creation')}>Check character creation</Button></div>}
     {!busy && world?.pending?.status === 'running' && <div className="mythfall-padding mythfall-buttons">
       <Button onClick={() => act({ kind: 'resume', wait_id: world.pending.id })}>Continue saved activity</Button>
       <Button icon={Pause} onClick={() => act({ kind: 'cancel', wait_id: world.pending.id })}>Pause saved activity</Button>

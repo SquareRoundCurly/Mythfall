@@ -114,5 +114,8 @@ export function useMythfallWorld({ request, connected, refreshVersion, realtimeE
     }
   }, [request, accept, connected])
 
-  return { packet, error, busy, pauseRequested, submission, act, cancel: () => { stop.current = true; setPauseRequested(true) } }
+  const refresh = useCallback(async () => {
+    if (connected) accept((await request('realm.observe', {})).payload, true)
+  }, [request, connected, accept])
+  return { packet, error, busy, pauseRequested, submission, act, refresh, cancel: () => { stop.current = true; setPauseRequested(true) } }
 }

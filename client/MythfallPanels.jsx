@@ -7,6 +7,7 @@ import { useMythfallSession } from './MythfallContext'
 import { mythfallMapPoint, mythfallProjection } from './mythfallProjection'
 import { useMythfallMapGesture } from './useMythfallMapGesture'
 import { MythfallChatPanel } from './MythfallChatPanel'
+import { CreationChat } from './creation/CreationChat'
 import { CharacterSelector, CompanionRelationship, Progression, MythfallAbilitiesPanel, MythfallPartyPanel } from './MythfallRpgPanels'
 import './mythfall.css'
 
@@ -90,7 +91,7 @@ export function MythfallWorldPanel() {
         aria-label={`Select ground ${item.name}`} title={item.name} onClick={(event) => { event.stopPropagation(); selectEntity(item.id) }} />)}
       <div className="mythfall-map-hint">Tap to walk · Drag to look around · Arrow keys to step</div>
       {!world && <div className="mythfall-welcome"><h3>Your story begins here</h3><p>{packet?.message ?? 'Opening Emberwick…'}</p>
-        <Button onClick={() => openPanel('builtin.chat')}>Open character creation chat</Button></div>}
+        <Button onClick={() => openPanel('mythfall.creation')}>Open character creation chat</Button></div>}
     </div>
   </section>
 }
@@ -162,7 +163,7 @@ export function MythfallConversationPanel() {
   const { world, actor, inventory, canAct, act, selectEntity, speech, setSpeech, openPanel, error } = useMythfallSession()
   return <section className="mythfall-panel mythfall-scroll" aria-label="Conversation">
     {error && <InlineState kind="error">{error}</InlineState>}
-    {!world ? <div className="mythfall-padding"><InlineState>Create your character in Chat to enter Emberwick.</InlineState><Button onClick={() => openPanel('builtin.chat')}>Open Chat</Button></div> : <>
+    {!world ? <div className="mythfall-padding"><InlineState>Create your character in Chat to enter Emberwick.</InlineState><Button onClick={() => openPanel('mythfall.creation')}>Open Chat</Button></div> : <>
       <div className="mythfall-padding"><Select label="Person in view" value={actor?.id ?? ''} onChange={(id) => { if (id) selectEntity(id) }} options={[
         { value: '', label: 'Choose someone nearby' }, ...world.actors.filter((a) => a.id !== world.self.id).map((a) => ({ value: a.id, label: a.name })),
       ]} /></div>
@@ -255,7 +256,7 @@ export function MythfallGamePanel({ panelId }) {
     'builtin.atlas': MythfallWorldPanel, 'mythfall.character': MythfallCharacterPanel,
     'mythfall.inventory': MythfallInventoryPanel, 'mythfall.conversation': MythfallConversationPanel,
     'mythfall.actions': MythfallActionsPanel, 'mythfall.journal': MythfallJournalPanel,
-    'mythfall.chat': MythfallChatPanel,
+    'mythfall.chat': MythfallChatPanel, 'mythfall.creation': CreationChat,
     'mythfall.abilities': MythfallAbilitiesPanel, 'mythfall.party': MythfallPartyPanel,
   }[panelId]
   return Component ? <Component /> : <InlineState kind="error">Game panel is unavailable.</InlineState>

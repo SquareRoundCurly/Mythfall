@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react'
 import { MythfallContext } from './MythfallContext'
 import { useMythfallWorld } from './useMythfallWorld'
+import { CreationConversation } from './creation/CreationConversation.js'
 
 const EMPTY_EVENTS = []
 
@@ -10,6 +11,16 @@ export function MythfallSession({ children, workspaceClient, openPanel, sessionI
   const [viewport, setViewport] = useState({ width: 800, height: 600 })
   const [cameraCenter, setCameraCenter] = useState(null)
   const runtime = useMythfallWorld({ ...props, realtimeEvents, viewport, cameraCenter })
+  const creation = useMemo(() => new CreationConversation(), [sessionId])
+  const creationState = useSyncExternalStore(creation.subscribe, creation.getSnapshot, creation.getSnapshot)
+  useEffect(() => creation.connect(props.request, props.connected, runtime.refresh),
+    [creation, props.request, props.connected, runtime.refresh])
+  useEffect(() => {
+    for (const event of realtimeEvents) {
+      if (event.payload?.session_uuid && event.payload.session_uuid !== sessionId) continue
+      creation.receive(event.payload, event.id)
+    }
+  }, [creation, realtimeEvents, sessionId])
   const [actorId, setActorId] = useState(null)
   const [itemId, setItemId] = useState(null)
   const [speech, setSpeech] = useState('')
@@ -33,7 +44,8 @@ export function MythfallSession({ children, workspaceClient, openPanel, sessionI
   }
   const value = {
     ...runtime, world, player: world?.self, workspaceClient, openPanel, selectEntity,
-    canAct: props.connected && !runtime.busy && Boolean(world),
+    creation, creationUncertain: creationState.uncertain, connected: props.connected,
+    canAct: props.connected && !runtime.busy && !creationState.busy && !creationState.uncertain && Boolean(world),
     actor: world?.actors.find((actor) => actor.id === actorId && actor.id !== world.self.id),
     item: world?.items.find((item) => item.id === itemId),
     inventory: world?.items.filter((item) => item.place.carrier === world.self.id) ?? [],
