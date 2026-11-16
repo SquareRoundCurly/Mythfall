@@ -1,10 +1,19 @@
-.stat-assignment {
+.mythfall-creation-chat .stat-assignment {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
   padding: 2px 0;
+}
+
+.mythfall-creation-history .message:has(.stat-assignment) {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .stat-rolls {
   display: grid;
-  grid-template-columns: repeat(6, minmax(38px, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 8px;
 }
 

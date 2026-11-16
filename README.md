@@ -5,6 +5,13 @@ time, DM adjudication, actor-limited NPC minds, shared effects, party combat and
 character panels. Python rules and seed assets live in `mythfall/`; PWA game
 panels and their single world controller live in `client/`.
 
+Character creation is a game-owned panel with a session-level conversation and
+stat assignment widget. It uses the existing saved-chat and component protocol;
+closing a tab never starts or repeats a turn. Only explicit, unapplied runtime
+busy refusals retry briefly. Unknown results require history reconciliation.
+New hosts supply shared Markdown presentation; cached older hosts show escaped
+text until refreshed, so publishing this module can precede a host rollout.
+
 This repository publishes independently through `pocketrealms deploy .`.
 `pocketrealms.json` declares the workspace capability and coordinates one wheel
 and panel bundle. Each game session retains its dedicated editable workspace.

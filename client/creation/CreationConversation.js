@@ -1,7 +1,8 @@
 // Character creation uses the module's existing durable chat and component
 // operations. This client observes history; reads never initiate agent turns.
 export class CreationConversation {
-  constructor() {
+  constructor({ sleep = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds)) } = {}) {
+    this.sleep = sleep
     this.listeners = new Set()
     this.epoch = 0
     this.active = false
@@ -30,6 +31,21 @@ export class CreationConversation {
   }
 
   setDraft(value) { this.emit({ draft: value }) }
+
+  async mutate(type, payload, epoch) {
+    for (let attempt = 0; ; attempt += 1) {
+      if (!this.active || epoch !== this.epoch) {
+        throw Object.assign(new Error('The character creation connection changed.'), { definitelyUnsent: true })
+      }
+      try { return await this.request(type, payload) } catch (error) {
+        // This server refusal occurs before any mutation. Autosave can briefly
+        // hold the same fence; unknown outcomes and other errors never replay.
+        if (!['chat_mutation_busy', 'workspace_mutation_busy'].includes(error.code)
+          || error.completionUnknown === true || attempt >= 4) throw error
+        await this.sleep(100 * 2 ** attempt)
+      }
+    }
+  }
 
   merge(messages) {
     const known = new Map(this.state.messages.map(message => [message.id, message]))
@@ -90,13 +106,13 @@ export class CreationConversation {
     this.emit({ busy: true, error: '' })
     let phase = 'message'
     try {
-      const created = await this.request('chat.message.create', { message: text })
+      const created = await this.mutate('chat.message.create', { message: text }, epoch)
       if (!this.active || epoch !== this.epoch) return
       this.merge([created.payload.user_message])
       this.pendingReply = created.payload.user_message.id
       this.emit({ draft: '' })
       phase = 'reply'
-      const response = await this.request('chat.reply.create', { message_id: this.pendingReply })
+      const response = await this.mutate('chat.reply.create', { message_id: this.pendingReply }, epoch)
       if (!this.active || epoch !== this.epoch) return
       this.merge(response.payload.messages)
       this.pendingReply = null
@@ -118,7 +134,7 @@ export class CreationConversation {
     const epoch = this.epoch
     this.emit({ busy: true, error: '' })
     try {
-      const response = await this.request('component.action', payload)
+      const response = await this.mutate('component.action', payload, epoch)
       if (this.active && epoch === this.epoch) {
         this.merge(response.payload.messages)
         await this.refresh()

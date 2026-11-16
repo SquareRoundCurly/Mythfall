@@ -123,3 +123,61 @@ test('explicit history acknowledgement unblocks future actions without replaying
   assert.equal(conversation.getSnapshot().uncertain, false)
   assert.equal(mutations, 1)
 })
+
+test('autosave contention retries only explicit unapplied refusals for each creation operation', async () => {
+  const applied = []
+  const attempts = new Map()
+  const delays = []
+  const conversation = new CreationConversation({ sleep: async delay => { delays.push(delay) } })
+  conversation.connect(async (type, payload) => {
+    if (type === 'chat.history') return { payload: { messages: [] } }
+    const count = (attempts.get(type) ?? 0) + 1
+    attempts.set(type, count)
+    if (count === 1) throw Object.assign(new Error('Busy'), { code: 'chat_mutation_busy' })
+    applied.push([type, payload])
+    if (type === 'chat.message.create') return { payload: { user_message: { id: 2, role: 'user', body: payload.message } } }
+    return { payload: { messages: [{ id: 3, role: 'assistant', body: 'Ready', payload: { reply_to_message_id: 2 } }] } }
+  }, true)
+  await turn()
+  conversation.setDraft('A ranger')
+  await conversation.send()
+  await conversation.componentAction('component.action', { message_id: 3, action: 'submit_stat_assignment' })
+  assert.deepEqual(applied.map(([type]) => type), ['chat.message.create', 'chat.reply.create', 'component.action'])
+  assert.equal(applied[1][1].message_id, 2)
+  assert.deepEqual(delays, [100, 100, 100])
+  assert.equal(conversation.getSnapshot().busy, false)
+})
+
+test('disconnecting during a busy delay cannot send on the replaced connection', async () => {
+  let release
+  let writes = 0
+  const conversation = new CreationConversation({ sleep: () => new Promise(resolve => { release = resolve }) })
+  const disconnect = conversation.connect(async type => {
+    if (type === 'chat.history') return { payload: { messages: [] } }
+    writes += 1
+    throw Object.assign(new Error('Busy'), { code: 'chat_mutation_busy' })
+  }, true)
+  conversation.setDraft('A ranger')
+  const sent = conversation.send()
+  await turn()
+  disconnect()
+  release()
+  await sent
+  assert.equal(writes, 1)
+})
+
+test('busy retries stop after five refusals and never retry a completion-unknown result', async () => {
+  for (const completionUnknown of [false, true]) {
+    let writes = 0
+    const conversation = new CreationConversation({ sleep: async () => {} })
+    conversation.connect(async type => {
+      if (type === 'chat.history') return { payload: { messages: [] } }
+      writes += 1
+      throw Object.assign(new Error('Busy'), { code: 'chat_mutation_busy', completionUnknown })
+    }, true)
+    conversation.setDraft('A ranger')
+    await conversation.send()
+    assert.equal(writes, completionUnknown ? 1 : 5)
+    assert.equal(conversation.getSnapshot().uncertain, completionUnknown)
+  }
+})

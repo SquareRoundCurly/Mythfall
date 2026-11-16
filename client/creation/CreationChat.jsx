@@ -1,7 +1,13 @@
 import { useEffect, useRef, useSyncExternalStore } from 'react'
-import { Button, InlineState, MessageContent, TextArea } from '@pocketrealms/ui'
+import * as ui from '@pocketrealms/ui'
 import { useMythfallSession } from '../MythfallContext'
 import { StatAssignmentMessage } from './StatAssignment'
+
+const { Button, InlineState, TextArea } = ui
+// Cached clients can open a new game release before refreshing the platform.
+// Text remains escaped and readable until their host offers shared Markdown UI.
+const MessageContent = typeof ui.MessageContent === 'function' ? ui.MessageContent
+  : ({ message }) => <div style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>{message.text}</div>
 
 export function CreationChat() {
   const { creation, world, connected, openPanel } = useMythfallSession()

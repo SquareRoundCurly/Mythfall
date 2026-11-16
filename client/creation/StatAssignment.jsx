@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react'
-import { classifyRealtimeSendFailure } from '@pocketrealms/host'
 import './stat_assignment.css'
 
 const BASE_STATS = [
@@ -179,10 +178,9 @@ export function StatAssignmentMessage({
         },
       })
     } catch (error) {
-      const failure = classifyRealtimeSendFailure(error)
-      if (failure === 'unsent') {
+      if (error?.definitelyUnsent === true) {
         setErrorMessage('Stat assignment was not sent because realtime is unavailable.')
-      } else if (failure === 'unknown') {
+      } else if (error?.completionUnknown === true) {
         setErrorMessage(
           'Stat assignment was interrupted. Completion is unknown; it was not retried.',
         )

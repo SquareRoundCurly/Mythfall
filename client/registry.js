@@ -1,5 +1,5 @@
 export function panels(builtinPanels) { return [
-  ...builtinPanels.map((panel) => (
+  ...builtinPanels.filter(panel => panel.id === 'builtin.atlas').map((panel) => (
     panel.id === 'builtin.atlas' ? { ...panel, title: 'World', size: 5 } : panel
   )),
   ...[

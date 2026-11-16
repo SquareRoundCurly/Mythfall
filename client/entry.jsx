@@ -10,7 +10,6 @@ const icons = {
 }
 
 export default function createMythfallUi(host) {
-  if (typeof host.ui.MessageContent !== 'function') throw new Error('Mythfall requires the current PocketRealms shared message UI.')
   return {
     contract: 1,
     panels: panels(host.builtinPanels).map((panel) => ({
